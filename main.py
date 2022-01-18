@@ -23,7 +23,7 @@ pygame.init()
 sc = pygame.display.set_mode((WIDTH,HEIGHT))
 clock = pygame.time.Clock()
 #backgound image
-img = pygame.image.load('1.jpg').convert()
+img = pygame.image.load('BG.jpg').convert()
 
 #function for collisions
 def detect_collision(dx, dy, ball, rect):
