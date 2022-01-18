@@ -10,13 +10,13 @@ size = width, height = (1200, 720)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Basic Arcanoid (Premitive physics)')
 
-# Fps, combo, lives and score
+# Fps, combo, lives and scorea
 IsStart = 0
 Lives = 3
 Score = 0
 Combo = 1
 clock = pygame.time.Clock()
-fps = 60
+fps = 120
 
 # Sounds
 BounceSNew = pygame.mixer.Sound('data/Sounds/BlockHit.ogg')
@@ -101,6 +101,7 @@ class Brick(pygame.sprite.Sprite):
             Combo += 1
             BounceSNew.play()
 
+
             if self.image == Brick.image:
                 BrickBlow(self.rect.x, self.rect.y)
                 BrickDestroyS.play()
@@ -111,13 +112,13 @@ class Brick(pygame.sprite.Sprite):
 # Ball class
 class Ball(pygame.sprite.Sprite):
 
-    image = load_image('Ball.png')
+    image = load_image('TheBall.png')
 
     def __init__(self, x, y):
         super().__init__(all_sprites)
         self.add(BallG)
         self.image = Ball.image
-        #self.image = pygame.transform.scale(Ball.image, (3,3))
+        #self.image = pygame.transform.scale(Ball.image, (32,32))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -164,12 +165,12 @@ class Ball(pygame.sprite.Sprite):
             self.vx = self.vx
             self.vy = -self.vy
 
-        if self.rect.x >= 1200 or self.rect.x <= 0:
+        if self.rect.x >= width - 30 or self.rect.x <= 0:
             self.vx = -self.vx
             self.vy = self.vy
 
         # The ball flew away of the screen - lose 1 live
-        if self.rect.y >= 720:
+        if self.rect.y >= 700:
             self.foul()
 
     # Function for start the ball
@@ -204,11 +205,12 @@ class Ball(pygame.sprite.Sprite):
 # Background class
 class Background(pygame.sprite.Sprite):
 
-    image = load_image('ArcBG.png')
+    image = load_image('BG.jpg')
 
     def __init__(self, x, y):
         super().__init__(all_sprites)
         self.image = Background.image
+        self.image = pygame.transform.scale(Background.image, (1200, 720))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -261,18 +263,19 @@ Bricks = pygame.sprite.Group()
 
 # Creating objects: paddle, ball and background
 BackGroundObj = Background(0, 0)
-Player = Paddle(400, 600)
+Player = Paddle(400, 650)
 PBall = Ball(628, 550)
 
 # Creating bricks
-brk_x, brk_y = 50, 100
+brk_x, brk_y = 50, 80
 for i in range(7):
-        for j in range(9):
+        for j in range(8):
 
             Brick(brk_x, brk_y)
-            brk_x += 128
-        brk_y += 32
-        brk_x -= 9 * 128
+            brk_x += 140
+        brk_y += 40
+        brk_x -= 8 * 140
+
 
 # Main programm
 running = True
